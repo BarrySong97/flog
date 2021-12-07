@@ -8,6 +8,8 @@ specifiers:
   '@vitejs/plugin-react': ^1.0.0
   ahooks: ^2.10.14
   autoprefixer: ^10.4.0
+  echarts: ^5.2.2
+  echarts-for-react: ^3.0.2
   postcss: ^8.4.4
   react: ^17.0.0
   react-dom: ^17.0.0
@@ -15,6 +17,7 @@ specifiers:
   reset-css: ^5.0.1
   sass: ^1.44.0
   tailwindcss: ^2.2.19
+  tslib: ^1.10.0
   typescript: ^4.3.2
   vite: ^2.6.4
 
@@ -23,6 +26,8 @@ dependencies:
   '@douyinfe/semi-ui': 2.1.3_d5c215a71cdc3853e6673ca67dc4c091
   ahooks: 2.10.14_react@17.0.2
   autoprefixer: 10.4.0_postcss@8.4.4
+  echarts: 5.2.2
+  echarts-for-react: 3.0.2_echarts@5.2.2+react@17.0.2
   postcss: 8.4.4
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
@@ -30,6 +35,7 @@ dependencies:
   reset-css: 5.0.1
   sass: 1.44.0
   tailwindcss: 2.2.19_6b4e3d148bdcb715d5f821ed0a9c268b
+  tslib: 1.14.1
 
 devDependencies:
   '@types/react': 17.0.37
@@ -840,6 +846,25 @@ packages:
     resolution: {integrity: sha512-+HlytyjlPKnIG8XuRG8WvmBP8xs8P71y+SKKS6ZXWoEgLuePxtDoUEiH7WkdePWrQ5JBpE6aoVqfZfJUQkjXwA==}
     dev: false
 
+  /echarts-for-react/3.0.2_echarts@5.2.2+react@17.0.2:
+    resolution: {integrity: sha512-DRwIiTzx8JfwPOVgGttDytBqdp5VzCSyMRIxubgU/g2n9y3VLUmF2FK7Icmg/sNVkv4+rktmrLN9w22U2yy3fA==}
+    peerDependencies:
+      echarts: ^3.0.0 || ^4.0.0 || ^5.0.0
+      react: ^15.0.0 || >=16.0.0
+    dependencies:
+      echarts: 5.2.2
+      fast-deep-equal: 3.1.3
+      react: 17.0.2
+      size-sensor: 1.0.1
+    dev: false
+
+  /echarts/5.2.2:
+    resolution: {integrity: sha512-yxuBfeIH5c+0FsoRP60w4De6omXhA06c7eUYBsC1ykB6Ys2yK5fSteIYWvkJ4xJVLQgCvAdO8C4mN6MLeJpBaw==}
+    dependencies:
+      tslib: 2.3.0
+      zrender: 5.2.1
+    dev: false
+
   /electron-to-chromium/1.4.9:
     resolution: {integrity: sha512-7AyB4SiLtGJbLACXezs8BDjDbZizuoiyHTQxbcvzfi5LYWRXVSFdmPvuDjtlWQmsVSONRicZfSBj3xgft0Wvrg==}
 
@@ -1020,6 +1045,10 @@ packages:
   /estree-walker/2.0.2:
     resolution: {integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==}
     dev: true
+
+  /fast-deep-equal/3.1.3:
+    resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==}
+    dev: false
 
   /fast-glob/3.2.7:
     resolution: {integrity: sha512-rYGMRwip6lUMvYD3BTScMwT1HtAs2d71SMv66Vrxs0IekGZEjhM0pcMfjQPnknBt2zeCwQMEupiN02ZP4DiT1Q==}
@@ -1730,6 +1759,10 @@ packages:
       is-arrayish: 0.3.2
     dev: false
 
+  /size-sensor/1.0.1:
+    resolution: {integrity: sha512-QTy7MnuugCFXIedXRpUSk9gUnyNiaxIdxGfUjr8xxXOqIB3QvBUYP9+b51oCg2C4dnhaeNk/h57TxjbvoJrJUA==}
+    dev: false
+
   /source-map-js/1.0.1:
     resolution: {integrity: sha512-4+TN2b3tqOCd/kaGRJ/sTYA0tR0mdXx26ipdolxcwtJVqEnqNYvlCAt1q3ypy4QMlYus+Zh34RNtYLoq2oQ4IA==}
     engines: {node: '>=0.10.0'}
@@ -1817,6 +1850,14 @@ packages:
       is-number: 7.0.0
     dev: false
 
+  /tslib/1.14.1:
+    resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
+    dev: false
+
+  /tslib/2.3.0:
+    resolution: {integrity: sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==}
+    dev: false
+
   /typescript/4.5.2:
     resolution: {integrity: sha512-5BlMof9H1yGt0P8/WF+wPNw6GfctgGjXp5hkblpyT+8rkASSmkUKMXrxR0Xg8ThVCi/JnHQiKXeBaEwCeQwMFw==}
     engines: {node: '>=4.2.0'}
@@ -1874,4 +1915,10 @@ packages:
   /yaml/1.10.2:
     resolution: {integrity: sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==}
     engines: {node: '>= 6'}
+    dev: false
+
+  /zrender/5.2.1:
+    resolution: {integrity: sha512-M3bPGZuyLTNBC6LiNKXJwSCtglMp8XUEqEBG+2MdICDI3d1s500Y4P0CzldQGsqpRVB7fkvf3BKQQRxsEaTlsw==}
+    dependencies:
+      tslib: 2.3.0
     dev: false

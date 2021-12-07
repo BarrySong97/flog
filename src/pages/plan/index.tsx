@@ -1,13 +1,9 @@
-import React, { FC } from 'react';
-export interface PlanProps {
+import React, { FC, useState } from "react";
+import PlanCard from "./components/card";
 
-}
+export interface PlanProps {}
 const Plan: FC<PlanProps> = () => {
-  return (
-    <div>
-      Hello Plan
-    </div>
-  );
+  return <PlanCard />;
 };
 
 export default Plan;
