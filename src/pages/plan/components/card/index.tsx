@@ -1,12 +1,18 @@
 import React, { FC, useState } from "react";
-import { Card, Typography, Space, Button, Popconfirm } from "@douyinfe/semi-ui";
+import {
+  Card,
+  Typography,
+  Space,
+  Button,
+  Popconfirm,
+  CardGroup,
+} from "@douyinfe/semi-ui";
 import ReactECharts from "echarts-for-react";
-import styles from "./index.scss";
-export interface CardProps {}
-const PlanCard: FC<CardProps> = () => {
-  const { Text } = Typography;
-  const [spacing, setSpacing] = useState(12);
-  const { Title } = Typography;
+const { Text, Title } = Typography;
+export interface CardProps {
+  title: string;
+}
+const PlanCard: FC<CardProps> = ({ title }) => {
   const option = {
     tooltip: {},
     color: ["#455dee", "#647afd"],
@@ -48,34 +54,48 @@ const PlanCard: FC<CardProps> = () => {
             value: 130,
           },
         ],
+        label: {
+          show: true,
+          position: "top",
+        },
         type: "bar",
         barWidth: "80%",
       },
     ],
   };
   return (
-    <div>
-      <div className="mb-4 flex justify-end">
-        <Space>
-          <Button theme="solid" type="primary">
-            添加计划
-          </Button>
-          <Button type="secondary">编辑计划</Button>
-        </Space>
-      </div>
-      <Title style={{ margin: " 0 0 16px 0" }} heading={4}>
-        2021-12 ~ 现在
-      </Title>
-      <Card
-        style={{
-          margin: " 0 0 16px 0",
-          // backgroundColor: " #0093E9",
-          // backgroundImage: "linear-gradient(160deg, #273172 0%, #222c5e 100%)",
-        }}
-        shadows="hover"
-        headerLine={false}
-        footerStyle={{ display: "flex", justifyContent: "flex-end" }}
-        footer={
+    <Card
+      title={title}
+      style={{
+        width: 400,
+        margin: " 0 0 16px 0",
+        // backgroundColor: " #0093E9",
+        // backgroundImage: "linear-gradient(160deg, #273172 0%, #222c5e 100%)",
+      }}
+      shadows="hover"
+      header={
+        <div className="flex justify-between items-center">
+          <Title heading={6} style={{ margin: "8px 0" }}>
+            {title}
+          </Title>
+          <div>
+            <Text>已训练天数: </Text>
+            <Text strong>160</Text>
+          </div>
+        </div>
+      }
+      headerLine={false}
+      footerStyle={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+      }}
+      footer={
+        <>
+          <div>
+            <Text>训练动作: </Text>
+            <Text strong>5</Text>
+          </div>
           <Space>
             <Popconfirm title="确定是否要保存此修改？" content="此修改将不可逆">
               <Button theme="solid" type="tertiary">
@@ -86,11 +106,11 @@ const PlanCard: FC<CardProps> = () => {
               进入计划
             </Button>
           </Space>
-        }
-      >
-        <ReactECharts style={{ width: "40%" }} option={option} />
-      </Card>
-    </div>
+        </>
+      }
+    >
+      <ReactECharts style={{ width: "100%" }} option={option} />
+    </Card>
   );
 };
 
