@@ -1,57 +1,102 @@
-import { ArrayField, Button, Col, Form, Row, Space } from "@douyinfe/semi-ui";
+import { IconMinusCircle } from "@douyinfe/semi-icons";
+import {
+  ArrayField,
+  Button,
+  Col,
+  Form,
+  Row,
+  Space,
+  Toast,
+} from "@douyinfe/semi-ui";
 import Section from "@douyinfe/semi-ui/lib/es/form/section";
 import React, { FC, useState } from "react";
+import { getExerciseList } from "../../../../../mock/exercise";
+import { AddPlanItem, ExercisePlanItem } from "../../../../services/plan";
+import { Exercise } from "../../../exercise";
 import "./index.scss";
 export interface AddPlanProps {}
 const AddPlan: FC<AddPlanProps> = () => {
-  const [menu, setMenu] = useState<any>([{ name: "脸部贴纸", type: "2D" }]);
+  const [exercises, setExercises] = useState<any>([
+    { name: "硬拉", sets: 4, per: 12 },
+  ]);
   const { Select, InputNumber } = Form;
+  const exerciseList: Exercise[] = getExerciseList();
+  const handleSubmit = (values: AddPlanItem) => {
+    console.log(values);
+    if (values.exercisePlanList?.length) {
+      const isExerciseValid = values.exercisePlanList.every(
+        (item: ExercisePlanItem) => item.per && item.sets && item.name
+      );
+
+      if (!isExerciseValid) {
+        Toast.warning("动作名称不能为空或者组数和个数不能为空");
+      }
+    } else {
+      Toast.warning("至少有一个动作");
+    }
+  };
   return (
     <div className="addPlan">
-      <Form>
-        <ArrayField field="effects" initValue={menu}>
-          {({ add, arrayFields, addWithInitValue }) => (
+      <Form onSubmit={(values: any) => handleSubmit(values)}>
+        <Section text={"基本信息"}>
+          <Form.Input
+            field={"name"}
+            rules={[{ required: true, message: "请输入名称" }]}
+            label="计划名称"
+            placeholder="输入名字"
+          ></Form.Input>
+        </Section>
+        <ArrayField field="exercisePlanList" initValue={exercises}>
+          {({ field, add, arrayFields }) => (
             <React.Fragment>
-              <Section text={"基本信息"}>
-                <Form.Input
-                  field="name"
-                  label="计划名称"
-                  placeholder="输入名字"
-                ></Form.Input>
-              </Section>
               <Section text={"动作详情"}>
                 {arrayFields.map(({ field, key, remove }, i) => (
-                  <Space className="mr-4">
+                  <div
+                    key={key}
+                    style={{ width: 400, display: "flex" }}
+                    className="justify-between items-center"
+                  >
                     <Select
-                      field="exercize"
+                      field={`${field}[name]`}
                       label="动作名称"
-                      style={{ width: "150px" }}
-                      placeholder="请选择你的动作"
+                      style={{ width: 120 }}
+                      rules={[{ required: true, message: "请输入名称" }]}
+                      placeholder="动作"
                     >
-                      <Select.Option value="operate">运营</Select.Option>
-                      <Select.Option value="rd">开发</Select.Option>
-                      <Select.Option value="pm">产品</Select.Option>
-                      <Select.Option value="ued">设计</Select.Option>
+                      {exerciseList.map((v) => (
+                        <Select.Option key={v.id} value={v.id}>
+                          {v.name}
+                        </Select.Option>
+                      ))}
                     </Select>
                     <InputNumber
                       formatter={(value) => `${value}`.replace(/\D/g, "")}
                       min={0}
                       max={Number.MAX_SAFE_INTEGER}
-                      field={"sets"}
+                      field={`${field}[sets]`}
                       label={`动作组数`}
                       suffix={"组"}
+                      style={{ width: 110 }}
                       hideButtons
                     />
                     <InputNumber
                       formatter={(value) => `${value}`.replace(/\D/g, "")}
                       min={0}
                       max={Number.MAX_SAFE_INTEGER}
-                      field={"per"}
+                      field={`${field}[per]`}
+                      style={{ width: 110 }}
                       label={`动作个数`}
                       suffix={"个"}
                       hideButtons
                     />
-                  </Space>
+                    <Button
+                      type="danger"
+                      theme="borderless"
+                      style={{ marginTop: 24 }}
+                      icon={<IconMinusCircle />}
+                      onClick={remove}
+                    ></Button>
+                  </div>
                 ))}
               </Section>
               <Button
@@ -64,6 +109,14 @@ const AddPlan: FC<AddPlanProps> = () => {
             </React.Fragment>
           )}
         </ArrayField>
+        <Button
+          htmlType="submit"
+          theme="solid"
+          type="primary"
+          style={{ width: "100%", marginTop: 16 }}
+        >
+          提交
+        </Button>
       </Form>
     </div>
   );

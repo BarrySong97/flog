@@ -1,5 +1,7 @@
 import { Button, CardGroup, SideSheet, Space } from "@douyinfe/semi-ui";
-import React, { FC, useState } from "react";
+import React, { FC, useMemo, useState } from "react";
+import { getPlanList } from "../../../mock/plan";
+import { planListItem } from "../../services/plan";
 import AddPlan from "./components/add-plan";
 import PlanCard from "./components/card";
 
@@ -9,6 +11,10 @@ const Plan: FC<PlanProps> = () => {
   const change = () => {
     setVisible(!visible);
   };
+
+  const data: planListItem[] = useMemo(() => getPlanList().list, []);
+  console.log(data);
+
   return (
     <div>
       <div className="mb-4 flex justify-start">
@@ -20,11 +26,22 @@ const Plan: FC<PlanProps> = () => {
         </Space>
       </div>
       <CardGroup>
-        {new Array(3).fill(null).map((v, idx) => (
-          <PlanCard title="测试标题" />
+        {data.map((v) => (
+          <PlanCard
+            key={v.id}
+            exerciseNumber={v.exerciseNumber}
+            trainingDays={v.trainingDays}
+            chartData={v.coverChartData}
+            title={v.name}
+          />
         ))}
       </CardGroup>
-      <SideSheet placement="bottom" title="滑动侧边栏" visible={visible} onCancel={change}>
+      <SideSheet
+        placement="right"
+        title="滑动侧边栏"
+        visible={visible}
+        onCancel={change}
+      >
         <AddPlan />
       </SideSheet>
     </div>

@@ -8,17 +8,26 @@ import {
   CardGroup,
 } from "@douyinfe/semi-ui";
 import ReactECharts from "echarts-for-react";
+import { PlanchartData } from "../../../../services/plan";
 const { Text, Title } = Typography;
 export interface CardProps {
   title: string;
+  chartData: PlanchartData[];
+  trainingDays: number;
+  exerciseNumber: number;
 }
-const PlanCard: FC<CardProps> = ({ title }) => {
+const PlanCard: FC<CardProps> = ({
+  trainingDays,
+  title,
+  chartData,
+  exerciseNumber,
+}) => {
   const option = {
     tooltip: {},
     color: ["#455dee", "#647afd"],
     xAxis: {
       type: "category",
-      data: ["Mon", "Tue", "Wed"],
+      data: chartData.map((v) => v.date),
       axisLine: {
         show: false,
       },
@@ -29,6 +38,9 @@ const PlanCard: FC<CardProps> = ({ title }) => {
         show: false, //隐藏X轴刻度
       },
     },
+    grid: {
+      left: "15%",
+    },
     yAxis: {
       type: "value",
       axisLine: {
@@ -37,23 +49,15 @@ const PlanCard: FC<CardProps> = ({ title }) => {
       splitLine: {
         show: false,
       },
+      axisLabel: {
+        formatter: function (value: string) {
+          return Math.floor(Number(value) / 1000) + "k";
+        },
+      },
     },
     series: [
       {
-        data: [
-          {
-            value: 120,
-            itemStyle: {
-              backgroundColor: "#455dee",
-            },
-          },
-          {
-            value: 200,
-          },
-          {
-            value: 130,
-          },
-        ],
+        data: chartData.map((v) => v.trainingNum),
         label: {
           show: true,
           position: "top",
@@ -80,7 +84,7 @@ const PlanCard: FC<CardProps> = ({ title }) => {
           </Title>
           <div>
             <Text>已训练天数: </Text>
-            <Text strong>160</Text>
+            <Text strong>{trainingDays}</Text>
           </div>
         </div>
       }
@@ -94,7 +98,7 @@ const PlanCard: FC<CardProps> = ({ title }) => {
         <>
           <div>
             <Text>训练动作: </Text>
-            <Text strong>5</Text>
+            <Text strong>{exerciseNumber}</Text>
           </div>
           <Space>
             <Popconfirm title="确定是否要保存此修改？" content="此修改将不可逆">

@@ -1,4 +1,16 @@
 .semi-sidesheet-body {
   overflow-y: scroll;
   padding-bottom: 16px;
+  &::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+  }
+  &::-webkit-scrollbar-track {
+    background: fff;
+    border-radius: 2px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #bfbfbf;
+    border-radius: 10px;
+  }
 }
