@@ -1,7 +1,8 @@
+import { IconCopyAdd } from "@douyinfe/semi-icons";
 import { Button, CardGroup, SideSheet, Space } from "@douyinfe/semi-ui";
 import React, { FC, useMemo, useState } from "react";
 import { getPlanList } from "../../../mock/plan";
-import { planListItem } from "../../services/plan";
+import { AddPlanItem, PlanListItem } from "../../services/plan";
 import AddPlan from "./components/add-plan";
 import PlanCard from "./components/card";
 
@@ -11,23 +12,47 @@ const Plan: FC<PlanProps> = () => {
   const change = () => {
     setVisible(!visible);
   };
+  const [planList, setPlanList] = useState<Array<PlanListItem>>(() =>
+    getPlanList()
+  );
 
-  const data: planListItem[] = useMemo(() => getPlanList().list, []);
-  console.log(data);
+  const onAddPlan = (item: AddPlanItem) => {
+    setPlanList([
+      ...planList,
+      {
+        ...item,
+        id: Math.random().toString(),
+        coverChartData: [],
+        exerciseNumber: item.exercisePlanList.length,
+        trainingDays: 0,
+      },
+    ]);
+  };
+
+  const onDeletePlan = (id: string) => {
+    setPlanList(planList.filter((v) => v.id !== id));
+  };
 
   return (
     <div>
       <div className="mb-4 flex justify-start">
         <Space>
-          <Button onClick={change} theme="solid" type="primary">
+          <Button
+            icon={<IconCopyAdd />}
+            onClick={change}
+            theme="solid"
+            type="primary"
+          >
             添加计划
           </Button>
-          <Button type="secondary">编辑计划列表</Button>
         </Space>
       </div>
       <CardGroup>
-        {data.map((v) => (
+        {planList.map((v) => (
           <PlanCard
+            onDelete={() => {
+              onDeletePlan(v.id);
+            }}
             key={v.id}
             exerciseNumber={v.exerciseNumber}
             trainingDays={v.trainingDays}
@@ -42,7 +67,12 @@ const Plan: FC<PlanProps> = () => {
         visible={visible}
         onCancel={change}
       >
-        <AddPlan />
+        <AddPlan
+          onAddPlan={(item) => {
+            change();
+            onAddPlan(item);
+          }}
+        />
       </SideSheet>
     </div>
   );

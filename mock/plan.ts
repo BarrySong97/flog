@@ -13,7 +13,7 @@ export function getPlanList() {
         coverChartData: getChartData().list,
       },
     ],
-  });
+  }).list;
 }
 
 export function getChartData() {

@@ -1,11 +1,11 @@
 import { Exercise } from "./exercize";
 
-export interface planListItem {
+export interface PlanListItem {
   id: string;
   name: string;
   exerciseNumber: number;
   trainingDays: number;
-  coverChartData: PlanchartData[];
+  coverChartData?: PlanchartData[];
 }
 
 export interface PlanchartData {
@@ -23,6 +23,7 @@ export interface ExercisePlanItem {
   name: string;
   sets: number;
   per: number;
+  weight: number;
 }
 
 export interface planDetail {

@@ -14,10 +14,12 @@ import { getExerciseList } from "../../../../../mock/exercise";
 import { AddPlanItem, ExercisePlanItem } from "../../../../services/plan";
 import { Exercise } from "../../../exercise";
 import "./index.scss";
-export interface AddPlanProps {}
-const AddPlan: FC<AddPlanProps> = () => {
+export interface AddPlanProps {
+  onAddPlan: (plan: AddPlanItem) => void;
+}
+const AddPlan: FC<AddPlanProps> = ({ onAddPlan }) => {
   const [exercises, setExercises] = useState<any>([
-    { name: "硬拉", sets: 4, per: 12 },
+    { id: 1, sets: 4, per: 12, weight: 10 },
   ]);
   const { Select, InputNumber } = Form;
   const exerciseList: Exercise[] = getExerciseList();
@@ -25,11 +27,14 @@ const AddPlan: FC<AddPlanProps> = () => {
     console.log(values);
     if (values.exercisePlanList?.length) {
       const isExerciseValid = values.exercisePlanList.every(
-        (item: ExercisePlanItem) => item.per && item.sets && item.name
+        (item: ExercisePlanItem) =>
+          item.per && item.sets && item.id && item.weight
       );
 
       if (!isExerciseValid) {
         Toast.warning("动作名称不能为空或者组数和个数不能为空");
+      } else {
+        onAddPlan(values);
       }
     } else {
       Toast.warning("至少有一个动作");
@@ -57,7 +62,7 @@ const AddPlan: FC<AddPlanProps> = () => {
                     className="justify-between items-center"
                   >
                     <Select
-                      field={`${field}[name]`}
+                      field={`${field}[id]`}
                       label="动作名称"
                       style={{ width: 120 }}
                       rules={[{ required: true, message: "请输入名称" }]}
@@ -76,7 +81,7 @@ const AddPlan: FC<AddPlanProps> = () => {
                       field={`${field}[sets]`}
                       label={`动作组数`}
                       suffix={"组"}
-                      style={{ width: 110 }}
+                      style={{ width: 75 }}
                       hideButtons
                     />
                     <InputNumber
@@ -84,9 +89,19 @@ const AddPlan: FC<AddPlanProps> = () => {
                       min={0}
                       max={Number.MAX_SAFE_INTEGER}
                       field={`${field}[per]`}
-                      style={{ width: 110 }}
+                      style={{ width: 75 }}
                       label={`动作个数`}
                       suffix={"个"}
+                      hideButtons
+                    />
+                    <InputNumber
+                      formatter={(value) => `${value}`.replace(/\D/g, "")}
+                      min={0}
+                      max={Number.MAX_SAFE_INTEGER}
+                      field={`${field}[weight]`}
+                      style={{ width: 75 }}
+                      label={`动作重量`}
+                      suffix={"kg"}
                       hideButtons
                     />
                     <Button
