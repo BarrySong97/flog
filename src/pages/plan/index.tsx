@@ -1,6 +1,7 @@
 import { IconCopyAdd } from "@douyinfe/semi-icons";
 import { Button, CardGroup, SideSheet, Space } from "@douyinfe/semi-ui";
 import React, { FC, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getPlanList } from "../../../mock/plan";
 import { AddPlanItem, PlanListItem } from "../../services/plan";
 import AddPlan from "./components/add-plan";
@@ -8,6 +9,7 @@ import PlanCard from "./components/card";
 
 export interface PlanProps {}
 const Plan: FC<PlanProps> = () => {
+  const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
   const change = () => {
     setVisible(!visible);
@@ -50,6 +52,9 @@ const Plan: FC<PlanProps> = () => {
       <CardGroup>
         {planList.map((v) => (
           <PlanCard
+            onClick={() => {
+              navigate(`/plan-detail/${v.id}`);
+            }}
             onDelete={() => {
               onDeletePlan(v.id);
             }}

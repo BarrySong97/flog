@@ -8,6 +8,7 @@ import Statistic from "./pages/statistic";
 import Plan from "./pages/plan";
 import Exercise from "./pages/exercise";
 import Settings from "./pages/settings";
+import PlanDetail from "./pages/plan-detail";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -16,6 +17,7 @@ ReactDOM.render(
         <Route index element={<Home />} />
         <Route path="statistic" element={<Statistic />} />
         <Route path="plan" element={<Plan />} />
+        <Route path="plan-detail/:id" element={<PlanDetail />} />
         <Route path="exercise" element={<Exercise />} />
         <Route path="settings" element={<Settings />} />
       </Route>

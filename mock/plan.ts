@@ -10,7 +10,7 @@ export function getPlanList() {
         name: "@cname",
         exerciseNumber: "@integer(1, 10)",
         trainingDays: "@integer(1, 1000)",
-        coverChartData: getChartData().list,
+        coverChartData: getChartData(),
       },
     ],
   }).list;
@@ -22,5 +22,5 @@ export function getChartData() {
       // 属性 id 是一个自增数，起始值为 1，每次增 1
       { date: "@datetime(M-d)", trainingNum: "@integer(5000, 10000)" },
     ],
-  });
+  }).list;
 }

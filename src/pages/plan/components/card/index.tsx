@@ -26,12 +26,15 @@ export interface CardProps {
   trainingDays: number;
   exerciseNumber: number;
   onDelete: () => void;
+  onClick: () => void;
 }
 const PlanCard: FC<CardProps> = ({
   trainingDays,
   title,
   chartData,
   onDelete,
+  onClick,
+  exerciseNumber,
 }) => {
   const option = {
     tooltip: {},
@@ -125,7 +128,14 @@ const PlanCard: FC<CardProps> = ({
       footer={
         <>
           <Space>
-            <Button icon={<IconArrowRight />} theme="solid" type="primary">
+            <Button
+              onClick={() => {
+                onClick();
+              }}
+              icon={<IconArrowRight />}
+              theme="solid"
+              type="primary"
+            >
               进入计划
             </Button>
 
@@ -174,6 +184,10 @@ const PlanCard: FC<CardProps> = ({
                 操作
               </Button>
             </Dropdown>
+            <div className="ml-6">
+              <Text>动作数: </Text>
+              <Text strong>{exerciseNumber}</Text>
+            </div>
 
             {/* <Popconfirm title="确定是否要保存此修改？" content="此修改将不可逆">
               <Button theme="solid" type="tertiary">
