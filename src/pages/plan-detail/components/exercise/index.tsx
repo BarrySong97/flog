@@ -19,13 +19,13 @@ const ExerciseList: FC<ExerciseProps> = () => {
             {arrayFields.map(({ field, key, remove }, i) => (
               <div
                 key={key}
-                style={{ display: "flex" }}
+                style={{ width: 400, display: "flex" }}
                 className="justify-between items-center"
               >
                 <Select
                   field={`${field}[id]`}
                   label="动作名称"
-                  style={{ width: 150 }}
+                  style={{ width: 120 }}
                   rules={[{ required: true, message: "请输入名称" }]}
                   placeholder="动作"
                 >
@@ -42,7 +42,7 @@ const ExerciseList: FC<ExerciseProps> = () => {
                   field={`${field}[sets]`}
                   label={`动作组数`}
                   suffix={"组"}
-                  style={{ width: 150 }}
+                  style={{ width: 75 }}
                   hideButtons
                 />
                 <InputNumber
@@ -50,7 +50,7 @@ const ExerciseList: FC<ExerciseProps> = () => {
                   min={0}
                   max={Number.MAX_SAFE_INTEGER}
                   field={`${field}[per]`}
-                  style={{ width: 150 }}
+                  style={{ width: 75 }}
                   label={`动作个数`}
                   suffix={"个"}
                   hideButtons
@@ -60,7 +60,7 @@ const ExerciseList: FC<ExerciseProps> = () => {
                   min={0}
                   max={Number.MAX_SAFE_INTEGER}
                   field={`${field}[weight]`}
-                  style={{ width: 150 }}
+                  style={{ width: 75 }}
                   label={`动作重量`}
                   suffix={"kg"}
                   hideButtons
