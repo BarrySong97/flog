@@ -4,8 +4,18 @@ import { PlanchartData } from "../../../../services/plan";
 import { getChartData } from "../../../../../mock/plan";
 import * as echarts from "echarts/core";
 export interface ChartsProps {
-  type: "line" | "bar" | "heatMap";
+  type: "line" | "bar" | "heatMap" | "pie";
 }
+const colorList = [
+  "#73DDFF",
+  "#73ACFF",
+  "#FDD56A",
+  "#FDB36A",
+  "#FD866A",
+  "#9E87FF",
+  "#58D5FF",
+];
+
 const Charts: FC<ChartsProps> = ({ type }) => {
   const chartData: PlanchartData[] = useMemo(() => getChartData(), []);
   const barOption = {
@@ -100,9 +110,9 @@ const Charts: FC<ChartsProps> = ({ type }) => {
     },
     backgroundColor: "#fff",
     calendar: {
-      top:'center',
+      top: "center",
       // left: 'center',
-      right: 'center',
+      right: "center",
       cellSize: [14, 14],
       range: [getVirtulData()["thatday"], getVirtulData()["today"]],
       itemStyle: {
@@ -114,7 +124,7 @@ const Charts: FC<ChartsProps> = ({ type }) => {
       },
       yearLabel: { show: false },
     },
-     grid: {
+    grid: {
       top: "15%",
     },
     series: {
@@ -122,6 +132,95 @@ const Charts: FC<ChartsProps> = ({ type }) => {
       coordinateSystem: "calendar",
       data: getVirtulData()["data"],
     },
+  };
+
+  const pieOption = {
+    title: {
+      text: "pieChart",
+      x: "center",
+      y: "center",
+      textStyle: {
+        fontSize: 20,
+      },
+    },
+    tooltip: {
+      trigger: "item",
+    },
+    series: [
+      {
+        type: "pie",
+        center: ["50%", "50%"],
+        radius: ["24%", "45%"],
+        clockwise: true,
+        avoidLabelOverlap: true,
+        hoverOffset: 15,
+        itemStyle: {
+          normal: {
+            color: function (params) {
+              return colorList[params.dataIndex];
+            },
+          },
+        },
+        label: {
+          show: true,
+          position: "outside",
+          formatter: "{a|{b}：{d}%}\n{hr|}",
+          rich: {
+            hr: {
+              /*
+            再次声明一下，大家在这里修改之后不要点击上面的保存！
+    不要点击保存！不要点击保存！重要的事情说三遍！
+    你的修改会覆盖我的原代码的！感谢理解！
+                                --2020/8/4  by--suwanqing
+                    */
+              backgroundColor: "t",
+              borderRadius: 3,
+              width: 3,
+              height: 3,
+              padding: [3, 3, 0, -12],
+            },
+            a: {
+              padding: [-30, 15, -20, 15],
+            },
+          },
+        },
+        labelLine: {
+          normal: {
+            length: 20,
+            length2: 30,
+            lineStyle: {
+              width: 1,
+            },
+          },
+        },
+        data: [
+          {
+            name: "一月",
+            value: 1.45,
+          },
+          {
+            name: "二月",
+            value: 2.93,
+          },
+          {
+            name: "三月",
+            value: 3.15,
+          },
+          {
+            name: "四月",
+            value: 4.78,
+          },
+          {
+            name: "五月",
+            value: 5.93,
+          },
+          {
+            name: "六月",
+            value: 5.73,
+          },
+        ],
+      },
+    ],
   };
   const whichOption = () => {
     switch (type) {
@@ -131,6 +230,8 @@ const Charts: FC<ChartsProps> = ({ type }) => {
         return <ReactECharts style={{ width: "100%" }} option={heatOption} />;
       case "bar":
         return <ReactECharts style={{ width: "100%" }} option={barOption} />;
+      case "pie":
+        return <ReactECharts style={{ width: "100%" }} option={pieOption} />;
       default:
         break;
     }
